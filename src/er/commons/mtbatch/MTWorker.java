@@ -8,6 +8,7 @@ package er.commons.mtbatch;
  */
 public abstract class MTWorker<U, R> extends Thread {
    protected U workUnit;
+   private boolean done;
    
    /**
     * Constructor
@@ -42,6 +43,17 @@ public abstract class MTWorker<U, R> extends Thread {
     */
    @Override()
    public void run() {
+      this.done = false;
       this.process(this.workUnit);
+      this.done = true;
+   }
+   
+   /**
+    * Test to see if this worker is done.
+    * 
+    * @return boolean
+    */
+   public boolean isDone() {
+      return this.done;
    }
 }
