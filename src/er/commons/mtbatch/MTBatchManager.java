@@ -54,7 +54,6 @@ public abstract class MTBatchManager<W extends MTWorker<U, R>, U, R> {
          }
          
          // check for threads which are done or cancelled
-         System.out.println("before done check: done: " + done + ", worker threads: " + this.workerThreads.size());
          Iterator<W> workerThreadIterator = this.workerThreads.iterator();
          while (workerThreadIterator.hasNext()) {
             W worker = workerThreadIterator.next();
@@ -63,7 +62,6 @@ public abstract class MTBatchManager<W extends MTWorker<U, R>, U, R> {
                workerThreadIterator.remove();
             }
          }
-         System.out.println("after done check: done: " + done + ", worker threads: " + this.workerThreads.size());
          
          // play nice
          try {
