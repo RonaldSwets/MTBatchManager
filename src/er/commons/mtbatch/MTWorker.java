@@ -26,11 +26,14 @@ public abstract class MTWorker<U, R> extends Thread {
    protected abstract void process(U workUnit);
    
    /**
-    * Implementations must return the result here.
+    * Implementations must return the result here. The default implementation
+    * returns null.
     * 
     * @return R
     */
-   public abstract R getResult();
+   public R getResult() {
+      return null;
+   }
    
    /**
     * Run this work unit
