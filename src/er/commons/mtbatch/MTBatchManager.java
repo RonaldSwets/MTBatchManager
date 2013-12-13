@@ -36,7 +36,7 @@ public abstract class MTBatchManager<W extends MTWorker<U, R>, U, R> {
       boolean done = false;
       
       while (!done || (done && this.workerThreads.size() > 0)) {
-         // keep adding threads unit we are at max threads or there are no work
+         // keep adding threads until we are at max threads or there are no work
          // units anymore.
          if (this.workerThreads.size() < this.getMaxThreads() && !done) {
             U unit = this.getNextWorkUnit();
