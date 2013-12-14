@@ -26,7 +26,8 @@ public abstract class MTBatchManager<W extends MTWorker<U, R>, U, R> {
    }
    
    /**
-    * Run
+    * Run. This method blocks until all work is done (e.g. the getNextWorkUnit()
+    * method returns null and all worker threads are done).
     */
    public void run() {
       this.initialize();
