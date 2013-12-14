@@ -1,6 +1,5 @@
 package er.commons.mtbatch;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,7 +13,6 @@ public abstract class MTBatchManager<W extends MTWorker<U, R>, U, R> {
    private static final int DEFAULT_MAX_THREADS = 8;
    
    private Class<W> workerClass;
-   private Class<U> workUnitClass;
    private List<W> workerThreads;
    
    /**
@@ -22,9 +20,8 @@ public abstract class MTBatchManager<W extends MTWorker<U, R>, U, R> {
     * 
     * @param workerClass
     */
-   public MTBatchManager(Class<W> workerClass, Class<U> workUnitClass) {
+   public MTBatchManager(Class<W> workerClass) {
       this.workerClass = workerClass;
-      this.workUnitClass = workUnitClass;
       this.workerThreads = new ArrayList<W>();
    }
    
@@ -44,10 +41,11 @@ public abstract class MTBatchManager<W extends MTWorker<U, R>, U, R> {
                done = true;
             } else {
                try {
-                  W worker = this.workerClass.getConstructor(this.workUnitClass).newInstance(unit);
+                  W worker = this.workerClass.newInstance();
+                  worker.setWorkUnit(unit);
                   this.workerThreads.add(worker);
                   worker.start();
-               } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+               } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | SecurityException e) {
                   System.err.println("MTBatchManager [" + this.getClass().getName() + "] was unable to create a worker: " + e.getMessage());
                }
             }

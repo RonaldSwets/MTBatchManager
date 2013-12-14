@@ -11,20 +11,20 @@ public abstract class MTWorker<U, R> extends Thread {
    private boolean done;
    
    /**
-    * Constructor
-    * 
-    * @param workUnit
-    */
-   public MTWorker(U workUnit) {
-      this.workUnit = workUnit;
-   }
-   
-   /**
     * Implementations must implement this method to process the given workunit.
     * 
     * @param workUnit
     */
    protected abstract void process(U workUnit);
+   
+   /**
+    * Set the work unit
+    * 
+    * @param workUnit
+    */
+   public final void setWorkUnit(U workUnit) {
+      this.workUnit = workUnit;
+   }
    
    /**
     * Implementations must return the result here. The default implementation
