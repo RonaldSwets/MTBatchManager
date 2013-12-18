@@ -6,7 +6,7 @@ package er.commons.mtbatch;
  * 
  * @author Eric
  */
-public abstract class MTWorker<U, R> extends Thread {
+public abstract class MTWorker<U, R> implements Runnable {
    protected U workUnit;
    private boolean done;
    
@@ -37,9 +37,9 @@ public abstract class MTWorker<U, R> extends Thread {
    }
    
    /**
-    * Run this work unit
+    * Run the worker thread
     * 
-    * @see java.lang.Thread#run()
+    * @see java.lang.Runnable#run()
     */
    @Override()
    public void run() {

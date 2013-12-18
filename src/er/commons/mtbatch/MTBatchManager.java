@@ -42,10 +42,14 @@ public abstract class MTBatchManager<W extends MTWorker<U, R>, U, R> {
                done = true;
             } else {
                try {
+                  // create the worker
                   W worker = this.workerClass.newInstance();
                   worker.setWorkUnit(unit);
                   this.workerThreads.add(worker);
-                  worker.start();
+                  
+                  // create and start the thread
+                  Thread workerThread = new Thread(worker);
+                  workerThread.start();
                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | SecurityException e) {
                   System.err.println("MTBatchManager [" + this.getClass().getName() + "] was unable to create a worker: " + e.getMessage());
                }
